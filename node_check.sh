@@ -251,10 +251,11 @@ yaml_node="\
     password: "\"${SS_NODE_password}\""
     udp: true"
 
-
+#  - {name: 🇭🇰 HKD Misaka IEPL x2, server: hkprogame.etonfast.top, port: 31034, type: ss, cipher: aes-128-gcm, password: 11237e36-8968-416f-ba43-22bc44251784, tfo: false}
+yaml_one_line="  - {name: ${final_node_name}, server: ${SS_NODE_server}, port: ${SS_NODE_port}, type: ss, cipher: ${SS_NODE_cipher}, password: ${SS_NODE_password}, tfo: false}"
 #只将chatGPT可以正常访问的节点进行输出
 if [ "$chatGPT_status" = "chatGPT✅" ]; then
-echo "$yaml_node" | tee -a yaml_nodes.txt
+echo "$yaml_one_line" | tee -a yaml_nodes.txt
 fi
 #关闭代理服务器
 kill -9 $PID
