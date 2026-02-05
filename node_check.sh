@@ -10,21 +10,21 @@ TEST=1
 #   ss://BASE64_ENCODED(userinfo)@host:port#tag
 # 其中：
 # - BASE64_ENCODED(userinfo) 里通常是 "method:password" 的 base64 编码
-#   例：明文 userinfo = "aes-128-gcm:934e436f-132b-4c38-acca-c2ab1f19a3ff"
+#   例：明文 userinfo = "aes-128-gcm:YOUR_PASSWORD"
 #   base64 后得到一串编码（可能需要补齐 '='）
 # - host:port 是服务器域名/IP 和端口
 # - #tag 是节点说明（URL 编码的文本）
 #
 # 示例：
-# ss://YWVzLTEyOC1nY206OTM0ZTQzNmYtMTMyYi00YzM4LWFjY2EtYzJhYjFmMTlhM2Zm@sg01.etonfast.top:31013#%F0%9F%87%B8%F0%9F%87%AC%20SGD%20Gcore%20x0.5
+# ss://BASE64_ENCODED(userinfo)@example.com:443#Example%20Tag
 # 解析思路：
 # - protocol = "ss"
-# - phrase_e = "YWVzLTEyOC1nY206OTM0ZTQzNmYtMTMyYi00YzM4LWFjY2EtYzJhYjFmMTlhM2Zm" (base64)
+# - phrase_e = "BASE64_ENCODED(userinfo)" (base64)
 # - phrase   = base64 解码后得到 "method:password"
-# - domain   = "sg01.etonfast.top"
-# - port     = "31013"
+# - domain   = "example.com"
+# - port     = "443"
 # - description = "# 后面的 URL 编码文本"
-#url='ss://YWVzLTEyOC1nY206OTM0ZTQzNmYtMTMyYi00YzM4LWFjY2EtYzJhYjFmMTlhM2Zm@sg01.etonfast.top:31013#%F0%9F%87%B8%F0%9F%87%AC%20SGD%20Gcore%20x0.5'
+#url='ss://BASE64_ENCODED(userinfo)@example.com:443#Example%20Tag'
 
 # vmess / trojan 协议格式标注（简要）
   #
@@ -59,7 +59,7 @@ TEST=1
   # vless（URL 格式，UUID 鉴权）：
   #   vless://UUID@host:port?encryption=none&security=tls&type=ws&host=example.com&path=/path#tag
   #
-  # vless://cd05d0ba-afdb-41df-a185-d27579902456@0.0.0.0:443\?type=tcp\&encryption=none\&host=\&path=\&security=tls\&flow=xtls-rprx-vision\&sni=new.download.the-best-airport.com#%E6%82%A8%E6%AD%A3%E5%9C%A8%E4%BD%BF%E7%94%A8%E7%9A%84%E6%98%AF%E6%9C%80%E6%96%B0%E5%AE%A2%E6%88%B7%E7%AB%AF
+  # vless://UUID@host.example.com:443\?type=tcp\&encryption=none\&host=\&path=\&security=tls\&flow=xtls-rprx-vision\&sni=example.com#Example%20Tag
   # 说明：
   # - UUID 是用户ID（必填）
   # - host:port 是服务器域名/IP 和端口
@@ -251,7 +251,7 @@ yaml_node="\
     password: "\"${SS_NODE_password}\""
     udp: true"
 
-#  - {name: 🇭🇰 HKD Misaka IEPL x2, server: hkprogame.etonfast.top, port: 31034, type: ss, cipher: aes-128-gcm, password: 11237e36-8968-416f-ba43-22bc44251784, tfo: false}
+#  - {name: Example-Node, server: example.com, port: 443, type: ss, cipher: aes-128-gcm, password: YOUR_PASSWORD, tfo: false}
 yaml_one_line="  - {name: ${final_node_name}, server: ${SS_NODE_server}, port: ${SS_NODE_port}, type: ss, cipher: ${SS_NODE_cipher}, password: ${SS_NODE_password}, tfo: false}"
 #只将chatGPT可以正常访问的节点进行输出
 if [ "$chatGPT_status" = "chatGPT✅" ]; then
